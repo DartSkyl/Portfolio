@@ -14,7 +14,3 @@ class RequestHistory(Model):
 
 
 RequestHistory.create_table()
-test = RequestHistory.create(request=...)
-test_2 = RequestHistory.create(request=...)
-
-print(datetime.now())

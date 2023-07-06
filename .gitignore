@@ -131,3 +131,6 @@ dmypy.json
 .env
 /testing_code.py
 /test_base.db
+/z_api.py
+/zfile.json
+/Abexample/
