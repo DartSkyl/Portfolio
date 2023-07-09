@@ -3,9 +3,6 @@ from ..default_handlers.start import bot_start
 from states.paremetrs_of_choice import setting_dict
 
 
-
-
-
 @bot.callback_query_handler(func=lambda call: True)
 def setting_choice(call):
     if call.data == 'cardio':
