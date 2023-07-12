@@ -10,5 +10,6 @@ def bot_start(message: Message):
                      f"Выбранный тип тренировок: {setting_dict.get('type')}\n"
                      f"Выбранный уровень тренировок: {setting_dict.get('level')}\n"
                      f"Последняя группа мышц: {setting_dict.get('muscle')}\n"
-                     f"Кол-во записей в дневнике: (кол-во записей)",
+                     f"Кол-во записей в дневнике: (кол-во записей)\n"
+                     f"{message.id}",
                      reply_markup=markup)
