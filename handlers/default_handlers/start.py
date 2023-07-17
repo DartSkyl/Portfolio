@@ -8,8 +8,7 @@ from states.paremetrs_of_choice import setting_dict
 def bot_start(message: Message):
     bot.send_message(message.chat.id,
                      f"Выбранный тип тренировок: {setting_dict.get('type')}\n"
-                     f"Выбранный уровень тренировок: {setting_dict.get('level')}\n"
+                     f"Выбранный уровень тренировок: {setting_dict.get('difficulty')}\n"
                      f"Последняя группа мышц: {setting_dict.get('muscle')}\n"
-                     f"Кол-во записей в дневнике: (кол-во записей)\n"
-                     f"{message.id}",
+                     f"Кол-во записей в дневнике: (кол-во записей)\n",
                      reply_markup=markup)

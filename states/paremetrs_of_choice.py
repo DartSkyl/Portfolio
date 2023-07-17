@@ -13,3 +13,4 @@ muscle_group_settings = {'Мышцы брюшного пресса': 'abdominals
                          'Трапециевидная мышца': 'traps', 'Трицепсы': 'triceps'}
 
 setting_dict = {}
+request_dict = {'muscle': 'neck'}
