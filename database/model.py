@@ -1,16 +1,33 @@
+import os
 from datetime import datetime
-from peewee import *
+from peewee import (SqliteDatabase, Model, DateTimeField, IntegerField, ForeignKeyField, CharField)
 
 
-db = SqliteDatabase('request_history.db')
+db = SqliteDatabase(os.path.abspath('users_data.db'))
 
 
-class RequestHistory(Model):
-    create_at = DateField(default=datetime.now())
-    request = TextField()
+class MainModel(Model):
+    created_at = DateTimeField(default=datetime.now())
 
     class Meta:
         database = db
 
 
-RequestHistory.create_table()
+class UsersList(MainModel):
+    from_user_id = IntegerField(primary_key=True)
+    user_name = CharField()
+    last_request = CharField(default='None|None|None')
+
+
+class Requests(MainModel):
+    user = ForeignKeyField(UsersList, backref='requests')
+    request = CharField()
+
+
+class TrainingDiary(MainModel):
+    user = ForeignKeyField(UsersList, backref='records')
+    journal_entry = CharField()
+
+
+def create_tables():
+    db.create_tables(MainModel.__subclasses__())

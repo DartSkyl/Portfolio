@@ -7,9 +7,11 @@ else:
     load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+HOST_API = os.getenv("HOST_API")
+API_URL = os.getenv("API_URL")
 RAPID_API_KEY = os.getenv("RAPID_API_KEY")
 DEFAULT_COMMANDS = (
     ("start", "Запустить бота"),
     ("help", "Вывести справку"),
-    ('write', 'Сделать запись')
+    ('make_a_record', 'Сделать запись')
 )
