@@ -20,15 +20,30 @@ def viewing_range(message):
     try:
         user_range = [int(num) for num in message.text.split('-')]
         if len(user_range) != 2:
-            raise ValueError
+            raise ValueError('There should be only two numbers!')
         elif user_range[0] > user_range[1] or user_range[0] == user_range[1]:
-            raise ValueError
-    except ValueError:
-        error_msg = 'Input error!\n'\
-                    'Enter the viewing rang. Format: "1-10\n'\
-                    'The first number must be less than the second"'
+            raise ValueError('The first number must be less than the second')
+    except ValueError as error_message:
+        error_msg = 'Input error!\n' + str(error_message) + '\n' + \
+                    'Enter the viewing rang. Format: "1-10"'
         msg = bot.send_message(message.from_user.id, text=error_msg)
         bot.register_next_step_handler(msg, viewing_range)
+    else:
+        RecordOut.range_entry(message.from_user.id, user_range, bot)
+
+
+def viewing_entry_by_number(message):
+    try:
+        user_number = int(message.text)
+        if user_number > RecordOut.entry_count(message.from_user.id):
+            raise ValueError('There is no record with this number!')
+    except ValueError as error_message:
+        error_msg = 'Input error!\n' + str(error_message) + '\n' + \
+                    'Enter the entry number'
+        msg = bot.send_message(message.from_user.id, text=error_msg)
+        bot.register_next_step_handler(msg, viewing_entry_by_number)
+    else:
+        RecordOut.entry_by_number(message.from_user.id, user_number, bot)
 
 
 @bot.message_handler(func=lambda message: message.text in diary_commands)
@@ -51,4 +66,6 @@ def diary_display(message: Message):
         msg = bot.send_message(message.from_user.id, text=mess_text)
         bot.register_next_step_handler(msg, viewing_range)
     elif message.text == 'View the entry by number':
-        ...
+        mess_text = 'Enter the entry number'
+        msg = bot.send_message(message.from_user.id, text=mess_text)
+        bot.register_next_step_handler(msg, viewing_entry_by_number)

@@ -16,27 +16,64 @@ def _get_last_request(from_user_id: int) -> list:
 
 def _get_last_10_notes(from_user_id: int, bot) -> None:
     user = UsersList.get(UsersList.from_user_id == from_user_id)
-    users_notes = [note.journal_entry for note in user.records.order_by(TrainingDiary.id).limit(10)]
-    for i_note in range(len(users_notes)):
-        msg = 'Entry number ' + str(i_note + 1) + '\n' + users_notes[i_note]
+    user_notes = [note.journal_entry for note in user.records.order_by(-TrainingDiary.id).limit(10)]
+    user_notes = user_notes[::-1]
+    note_number = RecordOut.entry_count(from_user_id) - 10
+    for i_note in range(len(user_notes)):
+        note_number += 1
+        msg = 'Entry number ' + str(note_number) + '\n' + user_notes[i_note]
         bot.send_message(from_user_id, text=msg)
 
 
+def _get_range_entry(from_user_id: int, user_range: list, bot) -> None:
+    user = UsersList.get(UsersList.from_user_id == from_user_id)
+    user_notes = [note.journal_entry for note in user.records.order_by(TrainingDiary.id)]
+    note_number = user_range[0]
+    user_notes = user_notes[user_range[0] - 1: user_range[1]]
+    for i_note in range(len(user_notes)):
+        msg = 'Entry number ' + str(note_number) + '\n' + user_notes[i_note]
+        note_number += 1
+        bot.send_message(from_user_id, text=msg)
 
+
+def _get_entry_count(from_user_id: int) -> int:
+    user = UsersList.get(UsersList.from_user_id == from_user_id)
+    user_notes = [note.journal_entry for note in user.records.order_by(TrainingDiary.id)]
+    return len(user_notes)
+
+
+def _get_an_entry_by_number(from_user_id: int, entry_number: int, bot) -> None:
+    user = UsersList.get(UsersList.from_user_id == from_user_id)
+    user_notes = [note.journal_entry for note in user.records.order_by(TrainingDiary.id)]
+    requested_record = user_notes[entry_number - 1]
+    msg = 'Entry number ' + str(entry_number) + '\n' + requested_record
+    bot.send_message(from_user_id, text=msg)
 
 
 class RecordOut:
     @staticmethod
-    def check_id(from_user_id: int):
+    def check_id(from_user_id: int) -> bool:
         return _check_user_id(from_user_id)
 
     @staticmethod
-    def last_request(from_user_id: int):
+    def last_request(from_user_id: int) -> list:
         return _get_last_request(from_user_id)
 
     @staticmethod
-    def print_last_ten_entry(from_user_id: int, bot):
+    def print_last_ten_entry(from_user_id: int, bot) -> None:
         return _get_last_10_notes(from_user_id, bot)
+
+    @staticmethod
+    def range_entry(from_user_id: int, user_range: list, bot) -> None:
+        return _get_range_entry(from_user_id, user_range, bot)
+
+    @staticmethod
+    def entry_count(from_user_id: int) -> int:
+        return _get_entry_count(from_user_id)
+
+    @staticmethod
+    def entry_by_number(from_user_id: int, entry_number: int, bot) -> None:
+        return _get_an_entry_by_number(from_user_id, entry_number, bot)
 
 
 if __name__ == '__main__':

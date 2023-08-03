@@ -9,7 +9,8 @@ def main_menu(message: Message):
     user_choice = RecordOut.last_request(message.from_user.id)
     text_message = f'Type of training: {user_choice[0].title()}\n' \
                    f'Training level: {user_choice[1].title()}\n' \
-                   f'Muscle group: {user_choice[2].title()}\n'
+                   f'Muscle group: {user_choice[2].title()}\n' \
+                   f'Total entries in the diary: {RecordOut.entry_count(message.from_user.id)}'
     bot.send_message(message.from_user.id, text=text_message, reply_markup=main_markup)
 
 
