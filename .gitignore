@@ -130,9 +130,11 @@ dmypy.json
 .idea/*
 .env
 /testing_code.py
-/test_base.db
+/*.db
+/*.json
 /z_api.py
 /zfile.json
 /Abexample/
 /translate.py
 /Stetes_exemple.py
+/probnik.py
