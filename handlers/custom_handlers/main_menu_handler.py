@@ -4,7 +4,7 @@ from loader import bot, api_url, api_headers
 from states.user_states import make_request, UserState
 from utils.site_api import main_api_func
 from handlers.default_handlers.start import main_menu
-from keyboards.inline.inline_keybords import *
+from keyboards.inline.inline_keyboards import *
 from database.record_func import RecordIn
 
 main_menu_commands = [
