@@ -1,15 +1,19 @@
 from telebot.handler_backends import State, StatesGroup
 from database.get_func import RecordOut
 
-types_settings = {'cardio', 'olympic_weightlifting',
-                  'plyometrics', 'powerlifting',
-                  'strength', 'stretching', 'strongman'}
+types_settings = {
+    'cardio': 0, 'olympic_weightlifting': 0,
+    'plyometrics': 0, 'powerlifting': 0,
+    'strength': 0, 'stretching': 0, 'strongman': 0
+}
 
-level_settings = {'beginner', 'intermediate', 'expert'}
+level_settings = {'beginner': 1, 'intermediate': 1, 'expert': 1}
 
-muscle_group_settings = {'abdominals', 'abductors', 'adductors', 'biceps', 'calves', 'chest', 'forearms', 'glutes',
-                         'hamstrings', 'lats', 'lower_back', 'middle_back', 'neck', 'quadriceps',
-                         'traps', 'triceps'}
+muscle_group_settings = {
+    'abdominals': 2, 'abductors': 2, 'adductors': 2, 'biceps': 2, 'calves': 2, 'chest': 2, 'forearms': 2,
+    'hamstrings': 2, 'lats': 2, 'lower_back': 2, 'middle_back': 2, 'neck': 2, 'quadriceps': 2,
+    'traps': 2, 'triceps': 2, 'glutes': 2
+}
 
 
 def make_request(from_user_id: int):
@@ -22,9 +26,4 @@ def make_request(from_user_id: int):
 
 
 class UserState(StatesGroup):
-    diary_entry = State()
-    #     name = State()
-    #     type = State()
-    #     level = State()
-    #     muscle = State()
     exercise = State()
