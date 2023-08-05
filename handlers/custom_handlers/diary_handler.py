@@ -4,6 +4,7 @@ from ..default_handlers.start import main_menu
 from keyboards.reply.reply_keyboards import diary_markup, view_markup
 from database.record_func import RecordIn
 from database.get_func import RecordOut
+from utils.misc.message_delet_func import delete_message
 
 
 diary_commands = ['Training diary', 'Make an entry in the diary', 'View entry']
@@ -14,6 +15,7 @@ def diary_entry(message):
     RecordIn.diary_entry(message.from_user.id, diary_entry=message.text)
     bot.send_message(message.from_user.id, text='Your note is saved')
     main_menu(message)
+    delete_message(message.from_user.id, message.id, 8)
 
 
 def viewing_range(message):

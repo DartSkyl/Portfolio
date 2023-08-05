@@ -3,6 +3,7 @@ from loader import bot
 from keyboards.reply.reply_keyboards import main_markup
 from database.record_func import RecordIn
 from database.get_func import RecordOut
+from utils.misc.message_delet_func import delete_message
 
 
 def main_menu(message: Message):
@@ -25,5 +26,11 @@ def bot_start(message: Message):
         text = f'Congratulations, you`re on the right track, {message.from_user.first_name}'
         bot.send_message(message.from_user.id, text=text)
         main_menu(message)
+
+
+@bot.message_handler(commands=['main'])
+def return_to_main_menu(message: Message):
+    main_menu(message)
+    delete_message(message.from_user.id, message.id, 100)
 
 # if __name__ == '__main__':

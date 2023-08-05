@@ -1,7 +1,7 @@
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 from loader import bot
 
-page = {'page': 1}
+page = dict()
 
 
 def exercise_list_creating(from_user_id: int):
@@ -11,6 +11,7 @@ def exercise_list_creating(from_user_id: int):
 
 def start_output(from_user_id: int):
     exercise_list = exercise_list_creating(from_user_id)
+    page['page'] = 1
     page['count'] = len(exercise_list)
     markup = InlineKeyboardMarkup()
     markup.add(InlineKeyboardButton(text=f'{page["page"]}/{page["count"]}', callback_data=' '),

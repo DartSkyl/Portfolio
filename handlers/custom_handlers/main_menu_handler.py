@@ -41,20 +41,18 @@ def view_exercise(message, msg_id, user_req):
     else:
         bot.send_message(message.from_user.id, text=text_message)
         main_menu(message)
-    delete_message(message.from_user.id, [msg_id - 1, msg_id - 2, msg_id - 3])
+    delete_message(message.from_user.id, msg_id, 3)
 
 
 @bot.message_handler(func=lambda message: message.text in main_menu_commands)
 def training_setting(message: Message):
-    msg_id = message.id
     mess = main_menu_dict[message.text][0]
     reply_markup = main_menu_dict[message.text][1]
     bot.send_message(message.from_user.id, text=mess, reply_markup=reply_markup())
-    delete_message(message.from_user.id, [msg_id - 1, msg_id - 2, msg_id - 3])
+    delete_message(message.from_user.id,  message.id, 3)
 
 
 @bot.message_handler(func=lambda message: message.text == 'View exercises')
 def view_exercise_handler(message: Message):
-    msg_id = message.id
     user_req = make_request(message.from_user.id)
-    view_exercise(message, msg_id, user_req)
+    view_exercise(message, message.id, user_req)

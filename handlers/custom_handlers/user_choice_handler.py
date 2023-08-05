@@ -12,11 +12,10 @@ for elem in [types_settings, level_settings, muscle_group_settings]:
 
 @bot.callback_query_handler(func=lambda call: call.data in types_settings or level_settings or muscle_group_settings)
 def setting_choice(call):
-    msg_id = call.message.id
     RecordIn.choice_regist(
         from_user_id=call.from_user.id,
         choice=call.data,
         set_index=setting_index_dict[call.data]
     )
-    delete_message(call.from_user.id, [msg_id, msg_id - 1])
     main_menu(call)
+    delete_message(call.from_user.id, call.message.id, 3)
