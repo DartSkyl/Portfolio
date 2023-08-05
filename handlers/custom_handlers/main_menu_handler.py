@@ -1,11 +1,11 @@
 from telebot.types import Message
-from telebot.apihelper import ApiTelegramException
 from loader import bot, api_url, api_headers
 from states.user_states import make_request, UserState
 from utils.site_api import main_api_func
 from handlers.default_handlers.start import main_menu
 from keyboards.inline.inline_keyboards import *
 from database.record_func import RecordIn
+from utils.misc.message_delet_func import delete_message
 
 main_menu_commands = [
     'Choose the type of training',
@@ -18,14 +18,6 @@ main_menu_dict = {
     'Set the training level': ('Choose a training level:', level_setting_keyboard),
     'Choose a muscle group': ('Choose a muscle group:', muscle_setting_keyboard),
 }
-
-
-def delete_message(chat_id: int, message_id_list: list) -> None:
-    for index in message_id_list:
-        try:
-            bot.delete_message(chat_id=chat_id, message_id=index)
-        except ApiTelegramException:
-            pass
 
 
 def view_exercise(message, msg_id, user_req):
