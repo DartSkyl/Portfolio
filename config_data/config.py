@@ -11,7 +11,7 @@ HOST_API = os.getenv("HOST_API")
 API_URL = os.getenv("API_URL")
 RAPID_API_KEY = os.getenv("RAPID_API_KEY")
 DEFAULT_COMMANDS = (
-    ("start", "Запустить бота"),
-    ("help", "Вывести справку"),
-    ('make_a_record', 'Сделать запись')
+    ("main", "Return to the main menu"),
+    ("help", "Output help"),
+    ("request_history", "Get last 10 requests")
 )

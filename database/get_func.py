@@ -34,6 +34,9 @@ def _get_range_entry(from_user_id: int, user_range: list, bot) -> None:
         msg = 'Entry number ' + str(note_number) + '\n' + user_notes[i_note]
         note_number += 1
         bot.send_message(from_user_id, text=msg)
+    else:
+        msg = 'Check the correctness of the range!'
+        bot.send_message(from_user_id, text=msg)
 
 
 def _get_entry_count(from_user_id: int) -> int:
@@ -48,6 +51,14 @@ def _get_an_entry_by_number(from_user_id: int, entry_number: int, bot) -> None:
     requested_record = user_notes[entry_number - 1]
     msg = 'Entry number ' + str(entry_number) + '\n' + requested_record
     bot.send_message(from_user_id, text=msg)
+
+
+def _get_last_ten_requests(from_user_id: int, bot) -> None:
+    user = UsersList.get(UsersList.from_user_id == from_user_id)
+    user_requests = [req.request + '\n' + str(req.created_at).split('.')[0]
+                     for req in user.requests.order_by(-Requests.id).limit(10)]
+    mess = '\n'.join(user_requests)
+    bot.send_message(from_user_id, text=mess)
 
 
 class RecordOut:
@@ -74,6 +85,10 @@ class RecordOut:
     @staticmethod
     def entry_by_number(from_user_id: int, entry_number: int, bot) -> None:
         return _get_an_entry_by_number(from_user_id, entry_number, bot)
+
+    @staticmethod
+    def last_ten_requests(from_user_id: int, bot) -> None:
+        return _get_last_ten_requests(from_user_id, bot)
 
 
 if __name__ == '__main__':
