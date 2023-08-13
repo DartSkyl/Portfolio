@@ -129,7 +129,6 @@ dmypy.json
 .pyre/
 .idea/*
 .env
-/testing_code.py
 /*.db
 /*.json
 /z_api.py
@@ -139,3 +138,4 @@ dmypy.json
 /Stetes_exemple.py
 /probnik.py
 /*.log
+/decorator_for_handlers.py
